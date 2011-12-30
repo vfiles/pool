@@ -4,7 +4,7 @@
 -- Module:      Data.Pool
 -- Copyright:   (c) 2011 MailRank, Inc.
 -- License:     BSD3
--- Maintainer:  Bryan O'Sullivan <bos@mailrank.com>
+-- Maintainer:  Bryan O'Sullivan <bos@serpentine.com>
 -- Stability:   experimental
 -- Portability: portable
 --
@@ -31,7 +31,6 @@ import Control.Concurrent.STM
 import Control.Exception (SomeException)
 import Control.Monad (forM_, forever, join, liftM2, unless, when)
 import Control.Monad.IO.Class (liftIO)
-{- import Control.Monad.IO.Control (MonadControlIO, controlIO)-}
 import Control.Monad.CatchIO
 import Data.Hashable (hash)
 import Data.List (partition)
@@ -145,7 +144,7 @@ reaper destroy idleTime pools = forever $ do
       return (map entry stale)
     forM_ resources $ \resource -> do
       destroy resource `catch` \(_::SomeException) -> return ()
-              
+
 -- | Temporarily take a resource from a 'Pool', perform an action with
 -- it, and return it to the pool afterwards.
 --

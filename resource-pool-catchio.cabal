@@ -1,5 +1,5 @@
 name:                resource-pool-catchio
-version:             0.2.0.2
+version:             0.2.0.3
 synopsis:            Fork of resource-pool, with a MonadCatchIO constraint
 description:
   This is a fork of Bryan O'Sullivan's resource-pool package. The only
@@ -13,7 +13,7 @@ description:
 homepage:            http://github.com/norm2782/pool
 license:             BSD3
 license-file:        LICENSE
-author:              Bryan O'Sullivan <bos@mailrank.com>
+author:              Bryan O'Sullivan <bos@serpentine.com>
 maintainer:          Jurriën Stutterheim <j.stutterheim@me.com>
 copyright:           Copyright 2011 MailRank, Inc.
 category:            Data, Database, Network
@@ -28,14 +28,15 @@ flag developer
   default: False
 
 library
-  exposed-modules:     
+  exposed-modules:
     Data.Pool
-  
-  build-depends:       
+
+  build-depends:
     base == 4.*,
     hashable,
     MonadCatchIO-transformers >= 0.2,
     transformers,
+    transformers-base >= 0.4,
     stm,
     time,
     vector >= 0.7
