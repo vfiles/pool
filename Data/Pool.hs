@@ -176,7 +176,7 @@ withResource :: MonadCatchIO m => Pool a -> (a -> m b) -> m b
 {-# SPECIALIZE withResource :: Pool a -> (a -> IO b) -> IO b #-}
 withResource pool act = block $ do
   (resource, local) <- liftIO $ takeResource pool
-  ret <- act resource `onException`
+  ret <- unblock (act resource) `onException`
             liftIO (destroyResource pool local resource)
   liftIO $ putResource local resource
   return ret
