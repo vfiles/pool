@@ -150,7 +150,7 @@ reaper destroy idleTime pools = forever $ do
         writeTVar entries fresh
         modifyTVar_ inUse (subtract (length stale))
       return (map entry stale)
-    forM_ resources $ \resource -> do
+    forM_ resources $ \resource ->
       destroy resource `catch` \(_::SomeException) -> return ()
 
 -- | Temporarily take a resource from a 'Pool', perform an action with
@@ -177,7 +177,7 @@ withResource :: MonadCatchIO m => Pool a -> (a -> m b) -> m b
 withResource pool act = block $ do
   (resource, local) <- liftIO $ takeResource pool
   ret <- act resource `onException`
-            (liftIO $ destroyResource pool local resource)
+            liftIO (destroyResource pool local resource)
   liftIO $ putResource local resource
   return ret
 #if __GLASGOW_HASKELL__ >= 700
