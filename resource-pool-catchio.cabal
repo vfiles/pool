@@ -1,5 +1,5 @@
 name:                resource-pool-catchio
-version:             0.2.1.0
+version:             0.2.2.0
 synopsis:            Fork of resource-pool, with a MonadCatchIO constraint
 description:
   This is a fork of Bryan O'Sullivan's resource-pool package. The only

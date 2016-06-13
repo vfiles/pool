@@ -31,6 +31,8 @@ module Data.Pool
     , takeResource
     , destroyResource
     , putResource
+    , numLocalInUse
+    , numPoolInUse
     ) where
 
 import Control.Applicative ((<$>))
@@ -91,6 +93,14 @@ instance Show (Pool a) where
     show Pool{..} = "Pool {numStripes = " ++ show numStripes ++ ", " ++
                     "idleTime = " ++ show idleTime ++ ", " ++
                     "maxResources = " ++ show maxResources ++ "}"
+
+numLocalInUse :: LocalPool a -> IO Int
+numLocalInUse = readTVarIO . inUse
+
+numPoolInUse :: Pool a -> IO [Int]
+numPoolInUse p = do
+    let lps = V.toList $ localPools p
+    mapM numLocalInUse lps
 
 createPool
     :: IO a
